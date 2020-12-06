@@ -60,7 +60,6 @@ public class HotelReservation {
             }
         }
 
-
         System.out.println(hotelName+"Ratings: "+ratingsofHotel+" Total Rates: "+minimumPrice);
         return hotelName;
     }
@@ -113,6 +112,45 @@ public class HotelReservation {
                 p.setRateRewardWeekend(rateRewardWeekends);
             }
         }
+    }
+
+    public String findCheapestAndBestRatedHotelforRewardCustomers(String startDate, String endDate) throws ParseException {
+        Date date1=new SimpleDateFormat("ddMMMyyyy").parse(startDate);
+        Date date2=new SimpleDateFormat("ddMMMyyyy").parse(endDate);
+
+        int weekDays = 0;
+        int weekendDays = 0;
+        Calendar start = Calendar.getInstance();
+        start.setTime(date1);
+        Calendar end = Calendar.getInstance();
+        end.setTime(new Date(date2.getTime()+MILLIS_IN_A_DAY));
+
+        for (Date date = start.getTime(); start.before(end); start.add(Calendar.DATE, 1), date = start.getTime()) {
+
+            if((date.toString()).substring(0,3).equals("Sat") || (date.toString()).substring(0,3).equals("Sun")){
+                weekendDays+=1;
+            }else {
+                weekDays+=1;
+            }
+        }
+        int minimumPrice = (listOfHotels.get("BridgeWood").getRateRewardWeekDays()*weekDays)+(listOfHotels.get("BridgeWood").getRateRewardWeekend()*weekendDays);
+
+        String hotelName = null;
+        int ratingsofHotel = 3;
+        for(Hotel p: listOfHotels.values()){
+            int minimumPriceOfHotel = (p.getRateRewardWeekDays()*weekDays)+(p.getRateRewardWeekend()*weekendDays);
+            if(minimumPrice>=minimumPriceOfHotel){
+                minimumPrice = minimumPriceOfHotel;
+                if(p.getRatings()>ratingsofHotel){
+                    ratingsofHotel = p.getRatings();
+                    hotelName = p.getHotelName();
+                }
+
+            }
+        }
+
+        System.out.println(hotelName+" Ratings: "+ratingsofHotel+" Total Rates: "+minimumPrice);
+        return hotelName;
     }
 }
 
