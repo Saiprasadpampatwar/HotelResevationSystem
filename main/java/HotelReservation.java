@@ -59,6 +59,14 @@ public class HotelReservation {
 
         return hotelName;
     }
+
+    public void addRatings(String hotelName, int ratings) {
+      for(Hotel p: listOfHotels.values()){
+          if(p.getHotelName().equals(hotelName)){
+              p.setRatings(ratings);
+          }
+      }
+    }
 }
 
 

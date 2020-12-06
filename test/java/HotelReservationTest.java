@@ -51,4 +51,19 @@ public class HotelReservationTest {
         Assert.assertEquals("BridgeWood",cheapestHotel);
 
     }
+
+    @Test
+    public void givenRatingsToHotelShouldRetuenTheSame() throws ParseException {
+        HotelReservation hotelReservation = new HotelReservation();
+        hotelReservation.add("BridgeWood",150,50);
+        hotelReservation.add("LakeWood",110,90);
+        hotelReservation.add("RidgeWood",220,150);
+        hotelReservation.addRatings("BridgeWood",4);
+        hotelReservation.addRatings("LakeWood",3);
+        hotelReservation.addRatings("RidgeWood",5);
+        Assert.assertEquals(4,HotelReservation.listOfHotels.get("BridgeWood").getRatings());
+        Assert.assertEquals(5,HotelReservation.listOfHotels.get("RidgeWood").getRatings());
+        Assert.assertEquals(3,HotelReservation.listOfHotels.get("LakeWood").getRatings());
+
+    }
 }
