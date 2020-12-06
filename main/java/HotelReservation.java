@@ -45,18 +45,22 @@ public class HotelReservation {
         }
 
         int minimumPrice = (listOfHotels.get("BridgeWood").getRateRegularCustomer()*weekDays)+(listOfHotels.get("BridgeWood").getRateRegularWeekend()*weekendDays);
-        String hotelName = "BridgeWood";
-
+        String hotelName = null;
+        int ratingsofHotel = 3;
         for(Hotel p: listOfHotels.values()){
             int minimumPriceOfHotel = (p.getRateRegularCustomer()*weekDays)+(p.getRateRegularWeekend()*weekendDays);
             if(minimumPrice>=minimumPriceOfHotel){
                 minimumPrice = minimumPriceOfHotel;
-                hotelName = p.getHotelName();
-                System.out.println(hotelName+", Total Rates: "+minimumPrice);
+                if(p.getRatings()>ratingsofHotel){
+                    ratingsofHotel = p.getRatings();
+                    hotelName = p.getHotelName();
+                }
+
             }
         }
 
 
+        System.out.println(hotelName+"Ratings: "+ratingsofHotel+" Total Rates: "+minimumPrice);
         return hotelName;
     }
 
