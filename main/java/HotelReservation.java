@@ -105,6 +105,15 @@ public class HotelReservation {
         return hotelName;
 
     }
+
+    public void addRewardCustomersRates(String hotelName, int rateRewardWeekdays, int rateRewardWeekends) {
+        for(Hotel p: listOfHotels.values()){
+            if(p.getHotelName().equals(hotelName)){
+                p.setRateRewardWeekDays(rateRewardWeekdays);
+                p.setRateRewardWeekend(rateRewardWeekends);
+            }
+        }
+    }
 }
 
 
