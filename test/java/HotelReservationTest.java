@@ -80,4 +80,18 @@ public class HotelReservationTest {
         Assert.assertEquals("BridgeWood",cheapestHotel);
 
     }
+
+    @Test
+    public void givenDatesRangeContainingWeekDaysAndWeekendShouldReturnTopRatedHotel() throws ParseException {
+        HotelReservation hotelReservation = new HotelReservation();
+        hotelReservation.add("BridgeWood",150,50);
+        hotelReservation.add("LakeWood",110,90);
+        hotelReservation.add("RidgeWood",220,150);
+        hotelReservation.addRatings("BridgeWood",4);
+        hotelReservation.addRatings("LakeWood",3);
+        hotelReservation.addRatings("RidgeWood",5);
+        String cheapestHotel = hotelReservation.topRatedHotel("11sep2020", "12sep2020");
+        Assert.assertEquals("RidgeWood",cheapestHotel);
+
+    }
 }
