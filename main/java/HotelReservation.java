@@ -3,6 +3,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class HotelReservation {
 
@@ -159,25 +160,22 @@ public class HotelReservation {
                 weekDays+=1;
             }
         }
-        int minimumPrice = (listOfHotels.get("BridgeWood").getRateRewardWeekDays()*weekDays)+(listOfHotels.get("BridgeWood").getRateRewardWeekend()*weekendDays);
 
-        String hotelName = null;
-        int ratingsofHotel = 3;
-        for(Hotel p: listOfHotels.values()){
-            int minimumPriceOfHotel = (p.getRateRewardWeekDays()*weekDays)+(p.getRateRewardWeekend()*weekendDays);
-            if(minimumPrice>=minimumPriceOfHotel){
-                minimumPrice = minimumPriceOfHotel;
-                if(p.getRatings()>ratingsofHotel){
-                    ratingsofHotel = p.getRatings();
-                    hotelName = p.getHotelName();
-                }
+        int finalWeekendDays = weekendDays;
+        int finalWeekDays = weekDays;
+        int minimumPriceofHotel = listOfHotels.values().stream().map(hotel -> hotel.getRateRewardWeekend()* finalWeekendDays +hotel.getRateRewardWeekDays()* finalWeekDays)
+                .min((x, y) -> x - y).get();
+        ArrayList<String> hotel = (ArrayList<String>) listOfHotels.values().stream().filter(hotel1 -> minimumPriceofHotel==hotel1.getRateRewardWeekend()* finalWeekendDays +hotel1.getRateRewardWeekDays()* finalWeekDays)
+                .map(hotel1 -> hotel1.getHotelName()).collect(Collectors.toList());
 
-            }
-        }
+        int ratingsGiven =listOfHotels.values().stream().filter(hotel2 -> minimumPriceofHotel==hotel2.getRateRewardWeekend()* finalWeekendDays +hotel2.getRateRewardWeekDays()* finalWeekDays)
+                .map(hotel1 -> hotel1.getRatings()).min((x,y)->x-y).get();
 
-        System.out.println(hotelName+" Ratings: "+ratingsofHotel+" Total Rates: "+minimumPrice);
-        return hotelName;
+
+        System.out.println(hotel.get(0)+" Ratings: "+ratingsGiven+" Total Rates: "+minimumPriceofHotel);
+        return hotel.get(0);
     }
+
 }
 
 

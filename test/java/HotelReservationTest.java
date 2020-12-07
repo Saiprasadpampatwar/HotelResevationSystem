@@ -131,4 +131,25 @@ public class HotelReservationTest {
         Assert.assertTrue(hotelReservation.validateCustomerType("reward"));
 
     }
+
+    @Test
+    public void givenDatesRangeForRewardCustomersContainingWeekDaysAndWeekendUsingJavaStramsShouldReturnCheapestHotel() throws Exception {
+        HotelReservation hotelReservation = new HotelReservation();
+        hotelReservation.add("BridgeWood",150,50);
+        hotelReservation.add("LakeWood",110,90);
+        hotelReservation.add("RidgeWood",220,150);
+        hotelReservation.addRatings("BridgeWood",4);
+        hotelReservation.addRatings("LakeWood",3);
+        hotelReservation.addRatings("RidgeWood",5);
+        hotelReservation.addRewardCustomersRates("BridgeWood",110,50);
+        hotelReservation.addRewardCustomersRates("LakeWood",80,80);
+        hotelReservation.addRewardCustomersRates("RidgeWood",100,40);
+        String cheapestHotel = hotelReservation.findCheapestAndBestRatedHotelforRewardCustomers("11sep2020", "12sep2020");
+        Assert.assertEquals("RidgeWood",cheapestHotel);
+        Assert.assertTrue(hotelReservation.validateDate("13sep2020"));
+        Assert.assertTrue(hotelReservation.validateCustomerType("reward"));
+
+    }
+
+
 }
