@@ -114,7 +114,7 @@ public class HotelReservationTest {
     }
 
     @Test
-    public void givenDatesRangeForRewardCustomersContainingWeekDaysAndWeekendShouldReturnCheapestHotel() throws ParseException {
+    public void givenDatesRangeForRewardCustomersContainingWeekDaysAndWeekendShouldReturnCheapestHotel() throws Exception {
         HotelReservation hotelReservation = new HotelReservation();
         hotelReservation.add("BridgeWood",150,50);
         hotelReservation.add("LakeWood",110,90);
@@ -127,6 +127,8 @@ public class HotelReservationTest {
         hotelReservation.addRewardCustomersRates("RidgeWood",100,40);
         String cheapestHotel = hotelReservation.findCheapestAndBestRatedHotelforRewardCustomers("11sep2020", "12sep2020");
         Assert.assertEquals("RidgeWood",cheapestHotel);
+        Assert.assertTrue(hotelReservation.validateDate("13sep2020"));
+        Assert.assertTrue(hotelReservation.validateCustomerType("reward"));
 
     }
 }
